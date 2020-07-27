@@ -88,6 +88,7 @@ export const schema = {
   isNotVerified:{
     custom: {
       options: (value) => {
+        console.log(value)
         return User.find({ email: value }).then((user) => {
           if (user.state.emailVerified) {
             return Promise.reject(new Error());
