@@ -2,7 +2,6 @@ import nodemailer from 'nodemailer'
 import jwt from 'jsonwebtoken'
 import config from '../../config'
 // https://myaccount.google.com/lesssecureapps?pli=1
-console.log(config.mail)
 const transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {

@@ -9,7 +9,6 @@ import User from '../user/user.model'
 
 export const signUp = async (req, res, next) => {
   try {
-    console.log('hi')
     const { name, email, password } = req.body
 
     const avatar = gravatar.url(email, {
@@ -60,4 +59,31 @@ export const ConfirmEmail = async (req, res, next) => {
       });
     }
   };
+
+
+  
+export const resendVerificationCode = async (req, res, next) => {
+  try {
+
+    const {email} = req.body
+    let user = await User.findOne({ email });
+    const salt = await bcrypt.genSalt(10)
+    const emailToken = String(Math.floor(100000 + Math.random() * 900000))
+    user.emailToken = await bcrypt.hash(emailToken, salt)
+    user = await user.save()
+
+    sendEmail('verifyEmail', user, { emailToken })
+    return res.status(200).json({
+      success: true,
+      responseCode: ResponseCodes.email_sent,
+    })
+  } catch (error) {
+    console.error(error.message)
+    res.status(500).json({
+      success: false,
+      responseCode: ResponseCodes.server_error,
+    })
+  }
+}
+  
 

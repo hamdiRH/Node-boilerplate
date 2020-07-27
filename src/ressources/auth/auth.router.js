@@ -1,20 +1,21 @@
-import express from "express";
-import { checkSchema } from "express-validator";
-import { authValidation } from "./auth.validation";
+import express from 'express'
+import { checkSchema } from 'express-validator'
+import { authValidation } from './auth.validation'
 import {
-//   signIn,
+  //   signIn,
   signUp,
-//   ConfirmEmail,
-//   getUser,
-//   resetPassword,
-//   ConfirmResetPassword,
-//   updatePassword,
-} from "./auth.controller";
-import { verifyToken } from "./auth.validation";
-import { resolvePromises, returnIfNotValid } from "../../utils/validation";
-import { auth } from "../../utils/auth";
+  ConfirmEmail,
+  resendVerificationCode,
+  //   getUser,
+  //   resetPassword,
+  //   ConfirmResetPassword,
+  //   updatePassword,
+} from './auth.controller'
+import { verifyToken } from './auth.validation'
+import { resolvePromises, returnIfNotValid } from '../../utils/validation'
+import { auth } from '../../utils/auth'
 
-const router = express.Router();
+const router = express.Router()
 
 // router.post(
 //   "/signin",
@@ -25,12 +26,20 @@ const router = express.Router();
 // );
 
 router.post(
-  "/register",
+  '/register',
   checkSchema(authValidation.signUpSchema),
   returnIfNotValid,
   resolvePromises,
   signUp
-);
+)
+
+router.post(
+  '/resend-verification-code',
+  checkSchema(authValidation.resendVerificationCode),
+  returnIfNotValid,
+  resolvePromises,
+  resendVerificationCode
+)
 
 // router.get("/confirmemail/:id", verifyToken, ConfirmEmail);
 
@@ -62,8 +71,5 @@ router.post(
 //   updatePassword
 // );
 
-
-
-
 // export default router;
-export default router;
+export default router
