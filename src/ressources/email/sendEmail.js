@@ -2,11 +2,12 @@ import nodemailer from 'nodemailer'
 import jwt from 'jsonwebtoken'
 import config from '../../config'
 // https://myaccount.google.com/lesssecureapps?pli=1
+console.log(config.mail)
 const transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
-    user: 'wassalni.carpool@gmail.com',
-    pass: 'Gomycode123',
+    user: config.mail.from,
+    pass: config.mail.password,
   },
 })
 
@@ -39,11 +40,11 @@ export const sendEmail = (type, user, opt) => {
      Thanks
      </p>
      `
-     const mailOptions = {
-     from: 'Wassalni@gmail.com',
-     to: user.email,
-     subject: 'Verify your Email',
-     html,
+  const mailOptions = {
+    from: config.mail.from,
+    to: user.email,
+    subject: 'Verify your Email',
+    html,
   }
   transporter.sendMail(mailOptions, function (error, info) {
     if (error) {

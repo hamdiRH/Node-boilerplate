@@ -16,6 +16,10 @@ const baseConfig = {
     jwt: process.env.JWT_SECRET,
     jwtExp: process.env.JWT_EXP,
   },
+  mail:{
+    from: process.env.MAIL_USER,
+    password: process.env.MAIL_PASSWORD
+  }
 }
 
 let envConfig = {}
