@@ -12,11 +12,16 @@ export const authValidation = {
     password: { ...schema.required, ...schema.password },
     name: { ...schema.required },
   },
-  resendVerificationCode:{
-    email: { ...schema.required, ...schema.email, ...schema.emailNotExist },
+  resendVerificationCode: {
+    email: {
+      ...schema.required,
+      ...schema.email,
+      ...schema.emailNotExist,
+      ...schema.isNotVerified,
+    },
   },
   resetPassword: {
-    email: { ...schema.required, ...schema.email, ...schema.emailNotExist, ...schema.isNotVerified },
+    email: { ...schema.required, ...schema.email, ...schema.emailNotExist },
   },
   ConfirmResetPassword: {
     password: { ...schema.required, ...schema.password },
