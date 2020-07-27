@@ -77,6 +77,18 @@ export const schema = {
     custom: {
       options: (value) => {
         return User.find({ email: value }).then((user) => {
+          if (user.length === 0) { 
+            return Promise.reject(new Error());
+          }
+        });
+      },
+      errorMessage: "emailNotExist",
+    },
+  },
+  isNotVerified:{
+    custom: {
+      options: (value) => {
+        return User.find({ email: value }).then((user) => {
           if (user.state.emailVerified) {
             return Promise.reject(new Error());
           }
@@ -85,18 +97,6 @@ export const schema = {
       errorMessage: "emailVerified",
     },
   },
-  isNotVerified:{
-    custom: {
-      options: (value) => {
-        return User.find({ email: value }).then((user) => {
-          if (user.length === 0) {
-            return Promise.reject(new Error());
-          }
-        });
-      },
-      errorMessage: "emailNotExist",
-    },
-  }
   password: {
     matches: {
       options: regex.password,
