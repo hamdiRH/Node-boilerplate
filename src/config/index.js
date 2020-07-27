@@ -5,6 +5,8 @@ dotenv.config()
 
 const env = process.env.NODE_ENV || 'development'
 
+console.log('env', env)
+
 const baseConfig = {
   env,
   isDev: env === 'development',
@@ -12,8 +14,8 @@ const baseConfig = {
   port: process.env.PORT,
   secrets: {
     jwt: process.env.JWT_SECRET,
-    jwtExp: process.env.JWT_EXP
-  }
+    jwtExp: process.env.JWT_EXP,
+  },
 }
 
 let envConfig = {}
