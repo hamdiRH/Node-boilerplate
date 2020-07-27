@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon -r esm ./src"
+    "start": "nodemon -r esm ./src",
+    "heroku":"git add . && git commit -m new_features && git push heroku master"
   },
   "keywords": [],
   "author": "",
@@ -20,6 +21,8 @@
     "gravatar": "^1.8.1",
     "helmet": "^3.23.3",
     "jsonwebtoken": "^8.5.1",
+    "moment-range": "^4.0.2",
+    "moment-timezone": "^0.5.31",
     "mongoose": "^5.9.25",
     "morgan": "^1.10.0",
     "nodemailer": "^6.4.10",

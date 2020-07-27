@@ -1,50 +1,55 @@
 // const express = require("express");
-import express from "express";
-import connectDB from "./config/db";
-import path from "path";
-import cors from "cors";
-import morgan from "morgan";
-import helmet from "helmet";
+import express from 'express'
+import connectDB from './utils/db'
+import path from 'path'
+import config from './config'
+import cors from 'cors'
+import helmet from 'helmet'
 
-const app = express();
+import authRouter from './ressources/auth/auth.router'
+const morgan = require('morgan')
 
-if (process.env.NODE_ENV !== 'production') {
-    require('dotenv').config();
-  }
+const app = express()
 
 // Connect Database
-connectDB();
+connectDB()
 
 /**
  * Init Middleware
  * **/
 
 // parse json request body
-app.use(express.json({ extended: false }));
+app.use(express.json({ extended: false }))
 // parse urlencoded request body
-app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: true }))
 // set security HTTP headers
-app.use(helmet());
+app.use(helmet())
 // enabling CORS for all requests
-app.use(cors());
-app.options("*", cors());
+app.use(cors())
+app.options('*', cors())
 // adding morgan to log HTTP requests
-app.use(morgan("dev"));
+app.use(morgan('dev'))
 
 // Define Routes
+app.use('/api/auth', authRouter)
 
+app.use(function (req, res, next) {
+  return res
+    .status(404)
+    .sendFile(path.join(__dirname + '/utils/four0four.html'))
+})
 
 // Serve static assets in production
-if (process.env.NODE_ENV === "production") {
-  // Set static folder
-  app.use(express.static("client/build"));
+// if (process.env.NODE_ENV === "production") {
+//   // Set static folder
+//   app.use(express.static("client/build"));
 
-  app.get("*", (req, res) => {
-    res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
-  });
-}
+//   app.get("*", (req, res) => {
+//     res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
+//   });
+// }
 
 export const start = () => {
-  const PORT = process.env.PORT || 5000;
-  app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
-};
+  const PORT = config.port || 4000
+  app.listen(PORT, () => console.log(`Server started on port ${PORT}`))
+}
