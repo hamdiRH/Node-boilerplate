@@ -65,14 +65,13 @@ export const ConfirmEmail = async (req, res, next) => {
 export const resendVerificationCode = async (req, res, next) => {
   try {
 
-    /*const {email} = req.body
+    const {email} = req.body
     let user = await User.findOne({ email });
     const salt = await bcrypt.genSalt(10)
     const emailToken = String(Math.floor(100000 + Math.random() * 900000))
     user.emailToken = await bcrypt.hash(emailToken, salt)
     user = await user.save()
-
-    sendEmail('verifyEmail', user, { emailToken })*/
+    sendEmail('verifyEmail', user, { emailToken })
     return res.status(200).json({
       success: true,
       responseCode: ResponseCodes.email_sent,
