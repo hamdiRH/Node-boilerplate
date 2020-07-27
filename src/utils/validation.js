@@ -89,8 +89,7 @@ export const schema = {
     custom: {
       options: (value) => {
         return User.find({ email: value }).then((user) => {
-          console.log(user)
-          if (user.state.emailVerified) {
+          if (user.length !== 0 && user[0].state.emailVerified) {
             return Promise.reject(new Error());
           }
         });
