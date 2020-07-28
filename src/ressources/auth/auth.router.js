@@ -2,7 +2,7 @@ import express from 'express'
 import { checkSchema } from 'express-validator'
 import { authValidation } from './auth.validation'
 import {
-  //   signIn,
+    signIn,
   signUp,
   ConfirmEmail,
   resendVerificationCode,
@@ -17,13 +17,13 @@ import { auth } from '../../utils/auth'
 
 const router = express.Router()
 
-// router.post(
-//   "/signin",
-//   checkSchema(authValidation.signInSchema),
-//   returnIfNotValid,
-//   resolvePromises,
-//   signIn
-// );
+router.post(
+  "/signin",
+  checkSchema(authValidation.signInSchema),
+  returnIfNotValid,
+  resolvePromises,
+  signIn
+);
 
 router.post(
   '/register',
@@ -41,7 +41,13 @@ router.post(
   resendVerificationCode
 )
 
-// router.get("/confirmemail/:id", verifyToken, ConfirmEmail);
+router.get(
+  '/confirmemail/:id',
+  checkSchema(authValidation.confirmEmail),
+  returnIfNotValid,
+  resolvePromises,
+  ConfirmEmail
+)
 
 // router.get("/getuser", auth, getUser);
 

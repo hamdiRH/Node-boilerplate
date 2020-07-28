@@ -12,6 +12,10 @@ export const authValidation = {
     password: { ...schema.required, ...schema.password },
     name: { ...schema.required },
   },
+  confirmEmail: {
+    email: { ...schema.required, ...schema.email, ...schema.emailNotExist },
+    verificationCode: { ...schema.required },
+  },
   resendVerificationCode: {
     email: {
       ...schema.required,

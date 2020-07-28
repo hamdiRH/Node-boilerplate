@@ -43,30 +43,41 @@ export const signUp = async (req, res, next) => {
 }
 
 export const ConfirmEmail = async (req, res, next) => {
-    try {
-      const user = await User.findById(req.user).select("-password");
-      user.state.emailVerified = true;
-      await user.save();
-      return res.status(200).json({
-        success: true,
-        data: user,
-      });
-    } catch (error) {
-      console.error(error.message);
-      res.status(500).json({
-        success: false,
-        responseCode: ResponseCodes.server_error,
-      });
+  try {
+    const { email, verificationCode } = req.body
+    const user = await User.findById(email).select('-password')
+    const isMatch = await bcrypt.compare(verificationCode, user.emailToken)
+    user.state.emailVerified = true
+
+    const payload = {
+      user: {
+        id: user.id,
+      },
     }
-  };
 
+    const token = jwt.sign(payload, config.secrets.jwt, {
+      expiresIn: config.secrets.jwtExp,
+    })
 
-  
+    user = await user.save()
+    return res.status(200).json({
+      success: true,
+      data: user,
+      token,
+    })
+  } catch (error) {
+    console.error(error.message)
+    res.status(500).json({
+      success: false,
+      responseCode: ResponseCodes.server_error,
+    })
+  }
+}
+
 export const resendVerificationCode = async (req, res, next) => {
   try {
-
-    const {email} = req.body
-    let user = await User.findOne({ email });
+    const { email } = req.body
+    let user = await User.findOne({ email })
     const salt = await bcrypt.genSalt(10)
     const emailToken = String(Math.floor(100000 + Math.random() * 900000))
     user.emailToken = await bcrypt.hash(emailToken, salt)
@@ -84,5 +95,41 @@ export const resendVerificationCode = async (req, res, next) => {
     })
   }
 }
-  
 
+export const signIn = async (req, res, next) => {
+  try {
+    const { email, password } = req.body
+    let user = await User.findOne({ email })
+    const isMatch = await bcrypt.compare(password, user.password)
+    if (!isMatch)
+      return res.status(400).json({
+        success: false,
+        responseCode: ResponseCodes.wrong_credential,
+      })
+    if (!user.state.emailVerified)
+      return res.status(400).json({
+        success: false,
+        responseCode: ResponseCodes.email_unverified,
+      })
+    const payload = {
+      user: {
+        id: user.id,
+      },
+    }
+
+    const token = jwt.sign(payload, config.get('jwtSecret'), {
+      expiresIn: 360000,
+    })
+    return res.status(200).json({
+      success: true,
+      data: user.select('-password'),
+      token,
+    })
+  } catch (error) {
+    console.error(error.message)
+    res.status(500).json({
+      success: false,
+      responseCode: ResponseCodes.server_error,
+    })
+  }
+}

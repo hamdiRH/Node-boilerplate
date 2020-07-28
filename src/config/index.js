@@ -16,10 +16,10 @@ const baseConfig = {
     jwt: process.env.JWT_SECRET,
     jwtExp: process.env.JWT_EXP,
   },
-  mail:{
+  mail: {
     from: process.env.MAIL_USER,
-    password: process.env.MAIL_PASSWORD
-  }
+    password: process.env.MAIL_PASSWORD,
+  },
 }
 
 let envConfig = {}
@@ -27,17 +27,17 @@ let envConfig = {}
 switch (env) {
   case 'dev':
   case 'development':
-    envConfig = require('./dev').config
+    envConfig = { dbUrl: process.env.DATABASE_URL_DEV }
     break
   case 'production':
-    envConfig = require('./prod').config
+    envConfig = { dbUrl: process.env.DATABASE_URL_PROD }
     break
   case 'test':
   case 'testing':
-    envConfig = require('./testing').config
+    envConfig = { dbUrl: process.env.DATABASE_URL_TEST }
     break
   default:
-    envConfig = require('./dev').config
+    envConfig = { dbUrl: process.env.DATABASE_URL_DEV }
 }
 
 export default merge(baseConfig, envConfig)
