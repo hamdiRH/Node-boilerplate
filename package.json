@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "node -r esm ./src",
-    "heroku":"git add . && git commit -m new_features && git push heroku master"
+    "heroku":"git add . && git commit -m new_features && git push heroku master",
+    "logs":"heroku logs --tail"
   },
   "keywords": [],
   "author": "HamdiRH",
