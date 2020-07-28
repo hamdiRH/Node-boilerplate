@@ -56,6 +56,7 @@ export const ConfirmEmail = async (req, res, next) => {
       })
 
     user.state.emailVerified = true
+    console.log("YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY")
     user = await user.save()
     const payload = {
       user: {
