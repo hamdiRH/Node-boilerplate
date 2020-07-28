@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "node -r esm ./src",
-    "heroku":"git add . && git commit -m new_features && git push heroku master",
-    "logs":"heroku logs --tail"
+    "heroku": "git add . && git commit -m new_features && git push heroku master",
+    "logs": "heroku logs --tail"
   },
   "keywords": [],
   "author": "HamdiRH",
@@ -25,6 +25,7 @@
     "moment-range": "^4.0.2",
     "moment-timezone": "^0.5.31",
     "mongoose": "^5.9.25",
+    "mongoose-unique-validator": "^2.0.3",
     "morgan": "^1.10.0",
     "nodemailer": "^6.4.10",
     "path": "^0.12.7",

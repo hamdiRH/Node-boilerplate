@@ -128,10 +128,10 @@ export const signIn = async (req, res, next) => {
     const token = jwt.sign(payload, config.secrets.jwt, {
       expiresIn: config.secrets.jwtExp,
     })
-    user = delete user.password
+    delete user.password
     return res.status(200).json({
       success: true,
-      data: user,
+      data: new User(user).toJSON,
       token,
     })
   } catch (error) {

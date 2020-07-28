@@ -1,7 +1,8 @@
 const mongoose = require('mongoose')
 import moment from '../../utils/moment'
+import uniqueValidator from 'mongoose-unique-validator'
 
-const UserSchema = new mongoose.Schema({
+const userSchema = new mongoose.Schema({
   state: {
     emailVerified: {
       type: Boolean,
@@ -45,4 +46,15 @@ const UserSchema = new mongoose.Schema({
   },
 })
 
-export default mongoose.model('user', UserSchema)
+
+userSchema.methods.toJSON = function() {
+  let obj = this.toObject()
+
+  delete obj.password
+
+  return obj
+}
+
+userSchema.plugin(uniqueValidator)
+
+export default mongoose.model('user', userSchema)
