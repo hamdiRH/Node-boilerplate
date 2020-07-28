@@ -46,9 +46,9 @@ export const ConfirmEmail = async (req, res, next) => {
   try {
     const { email, verificationCode } = req.body
     const user = await User.findOne({ email }).select('-password')
-    console.log('user', user)
+
     const isMatch = await bcrypt.compare(verificationCode, user.emailToken)
-    console.log('isMatch', isMatch)
+
     if (!isMatch)
       return res.status(500).json({
         success: false,
@@ -59,14 +59,14 @@ export const ConfirmEmail = async (req, res, next) => {
     user = await user.save()
     const payload = {
       user: {
-        id: user.id,
+        id: user._id,
       },
     }
 
     const token = jwt.sign(payload, config.secrets.jwt, {
       expiresIn: config.secrets.jwtExp,
     })
-
+console.log("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX")
     return res.status(200).json({
       success: true,
       data: user,
