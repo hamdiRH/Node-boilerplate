@@ -131,7 +131,7 @@ export const signIn = async (req, res, next) => {
     delete user.password
     return res.status(200).json({
       success: true,
-      data: user.toJSON,
+      data: "user.toJSON",
       token,
     })
   } catch (error) {
