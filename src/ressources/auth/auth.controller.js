@@ -45,7 +45,7 @@ export const signUp = async (req, res, next) => {
 export const ConfirmEmail = async (req, res, next) => {
   try {
     const { email, verificationCode } = req.body
-    const user = await User.findById(email).select('-password')
+    const user = await User.findOne({ email }).select('-password')
     console.log('user', user)
     const isMatch = await bcrypt.compare(verificationCode, user.emailToken)
     console.log('isMatch', isMatch)
