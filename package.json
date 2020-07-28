@@ -1,6 +1,6 @@
 {
   "name": "boilerplate-node",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -8,7 +8,7 @@
     "heroku":"git add . && git commit -m new_features && git push heroku master"
   },
   "keywords": [],
-  "author": "",
+  "author": "HamdiRH",
   "license": "ISC",
   "dependencies": {
     "bcryptjs": "^2.4.3",
