@@ -18,7 +18,7 @@ import { auth } from '../../utils/auth'
 const router = express.Router()
 
 router.post(
-  "/signin",
+  "/login",
   checkSchema(authValidation.signInSchema),
   returnIfNotValid,
   resolvePromises,

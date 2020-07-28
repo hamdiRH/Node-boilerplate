@@ -67,7 +67,7 @@ export const ConfirmEmail = async (req, res, next) => {
     const token = jwt.sign(payload, config.secrets.jwt, {
       expiresIn: config.secrets.jwtExp,
     })
-console.log("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX")
+
     return res.status(200).json({
       success: true,
       data: user,
@@ -125,8 +125,8 @@ export const signIn = async (req, res, next) => {
       },
     }
 
-    const token = jwt.sign(payload, config.get('jwtSecret'), {
-      expiresIn: 360000,
+    const token = jwt.sign(payload, config.secrets.jwt, {
+      expiresIn: config.secrets.jwtExp,
     })
     return res.status(200).json({
       success: true,
