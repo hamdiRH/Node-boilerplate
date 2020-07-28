@@ -56,6 +56,7 @@ export const ConfirmEmail = async (req, res, next) => {
       })
 
     user.state.emailVerified = true
+    user = await user.save()
     const payload = {
       user: {
         id: user.id,
@@ -66,7 +67,6 @@ export const ConfirmEmail = async (req, res, next) => {
       expiresIn: config.secrets.jwtExp,
     })
 
-    user = await user.save()
     return res.status(200).json({
       success: true,
       data: user,
