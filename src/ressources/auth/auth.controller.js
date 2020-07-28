@@ -47,8 +47,13 @@ export const ConfirmEmail = async (req, res, next) => {
     const { email, verificationCode } = req.body
     const user = await User.findById(email).select('-password')
     const isMatch = await bcrypt.compare(verificationCode, user.emailToken)
-    user.state.emailVerified = true
+    if (!isMatch)
+      return res.status(500).json({
+        success: false,
+        responseCode: ResponseCodes.invalid_code,
+      })
 
+    user.state.emailVerified = true
     const payload = {
       user: {
         id: user.id,
