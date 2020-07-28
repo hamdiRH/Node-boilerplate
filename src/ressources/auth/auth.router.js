@@ -41,8 +41,8 @@ router.post(
   resendVerificationCode
 )
 
-router.get(
-  '/confirmemail/:id',
+router.post(
+  '/confirm-mail',
   checkSchema(authValidation.confirmEmail),
   returnIfNotValid,
   resolvePromises,
