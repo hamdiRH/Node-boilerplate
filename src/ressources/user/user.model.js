@@ -46,12 +46,10 @@ const userSchema = new mongoose.Schema({
   },
 })
 
-
-userSchema.methods.toJSON = function() {
+userSchema.methods.toJSON = function () {
   let obj = this.toObject()
-
   delete obj.password
-
+  delete obj.emailToken
   return obj
 }
 
