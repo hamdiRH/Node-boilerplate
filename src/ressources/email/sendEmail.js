@@ -3,7 +3,7 @@ import jwt from 'jsonwebtoken'
 import config from '../../config'
 // https://myaccount.google.com/lesssecureapps?pli=1
 // https://accounts.google.com/b/0/DisplayUnlockCaptcha
-console.log('mail', config.mail)
+
 const transporter = nodemailer.createTransport({
   service: 'gmail',
   host: 'smtp.gmail.com',
