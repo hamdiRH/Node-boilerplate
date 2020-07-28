@@ -128,7 +128,7 @@ export const signIn = async (req, res, next) => {
     const token = jwt.sign(payload, config.secrets.jwt, {
       expiresIn: config.secrets.jwtExp,
     })
-    delete user.password
+    user = delete user.password
     return res.status(200).json({
       success: true,
       data: user,
