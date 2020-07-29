@@ -41,9 +41,14 @@ const userSchema = new mongoose.Schema({
     type: Date,
     default: moment,
   },
-  updateAt: {
+  updatedAt: {
     type: Date,
   },
+})
+
+userSchema.pre('save', function(next) {
+  this.updatedAt = moment()
+  next()
 })
 
 userSchema.methods.toJSON = function () {
