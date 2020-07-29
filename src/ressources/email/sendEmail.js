@@ -20,7 +20,7 @@ export const sendEmail = (type, user, opt) => {
   if (type === 'confirmEmail')
     html = `<h1>Hey ${user.name}</h1>
   <p> Please confirm your email address by following the link below.\n
-   http://localhost:5000/api/auth/confirmEmail/${jwt.sign(
+  https://boilerplate-node-express.herokuapp.com/api/auth/confirmEmail/${jwt.sign(
      { id: user._id },
      config.secrets.jwt,
      { expiresIn: config.secrets.jwtExp }
@@ -28,7 +28,7 @@ export const sendEmail = (type, user, opt) => {
   if (type === 'resetPassword')
     html = `<h1>Hey ${user.name}</h1>
     <p> You recently requested to reset your password. Click on the following link below to reset it.\n
-     http://localhost:5000/api/auth/ConfirmResetPassword/${jwt.sign(
+    https://boilerplate-node-express.herokuapp.com/api/auth/ConfirmResetPassword/${jwt.sign(
        { id: user._id },
        config.secrets.jwt,
        { expiresIn: config.secrets.jwtExp }
