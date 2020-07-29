@@ -2,14 +2,13 @@ import express from 'express'
 import { checkSchema } from 'express-validator'
 import { authValidation } from './auth.validation'
 import {
-    signIn,
+  signIn,
   signUp,
   ConfirmEmail,
   resendVerificationCode,
-  //   getUser,
-  //   resetPassword,
-  //   ConfirmResetPassword,
-  //   updatePassword,
+  resetPassword,
+  ConfirmResetPassword,
+  updatePassword,
 } from './auth.controller'
 import { verifyToken } from './auth.validation'
 import { resolvePromises, returnIfNotValid } from '../../utils/validation'
@@ -18,12 +17,12 @@ import { auth } from '../../utils/auth'
 const router = express.Router()
 
 router.post(
-  "/login",
+  '/login',
   checkSchema(authValidation.signInSchema),
   returnIfNotValid,
   resolvePromises,
   signIn
-);
+)
 
 router.post(
   '/register',
@@ -49,33 +48,30 @@ router.post(
   ConfirmEmail
 )
 
-// router.get("/getuser", auth, getUser);
+router.post(
+  '/resetPassword',
+  checkSchema(authValidation.resetPassword),
+  returnIfNotValid,
+  resolvePromises,
+  resetPassword
+)
 
-// router.post(
-//   "/resetPassword",
-//   checkSchema(authValidation.resetPassword),
-//   returnIfNotValid,
-//   resolvePromises,
-//   resetPassword
-// );
+router.post(
+  '/ConfirmResetPassword/:id',
+  verifyToken,
+  checkSchema(authValidation.ConfirmResetPassword),
+  returnIfNotValid,
+  resolvePromises,
+  ConfirmResetPassword
+)
 
-// router.post(
-//   "/ConfirmResetPassword/:id",
-//   verifyToken,
-//   checkSchema(authValidation.ConfirmResetPassword),
-//   returnIfNotValid,
-//   resolvePromises,
-//   ConfirmResetPassword
-// );
-
-// router.post(
-//   "/updatePassword",
-//   auth,
-//   checkSchema(authValidation.updatePassword),
-//   returnIfNotValid,
-//   resolvePromises,
-//   updatePassword
-// );
-
+router.post(
+  '/updatePassword',
+  auth,
+  checkSchema(authValidation.updatePassword),
+  returnIfNotValid,
+  resolvePromises,
+  updatePassword
+)
 
 export default router

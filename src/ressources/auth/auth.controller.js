@@ -142,3 +142,79 @@ export const signIn = async (req, res, next) => {
     })
   }
 }
+
+export const resetPassword = async (req, res, next) => {
+  try {
+    const { email } = req.body;
+    let user = await User.findOne({ email });
+    sendEmail("resetPassword", user);
+    return res.status(200).json({
+      success: true,
+      responseCode: ResponseCodes.email_sent,
+    });
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).json({
+      success: false,
+      responseCode: ResponseCodes.server_error,
+    });
+  }
+};
+
+export const ConfirmResetPassword = async (req, res, next) => {
+  try {
+    const { password } = req.body;
+    const user = await User.findById(req.user);
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (isMatch)
+      return res.status(400).json({
+        success: false,
+        responseCode: ResponseCodes.same_password,
+      });
+    const salt = await bcrypt.genSalt(10);
+    user.password = await bcrypt.hash(password, salt);
+    await user.save();
+
+    return res.status(200).json({
+      success: true,
+      responseCode: ResponseCodes.password_updated,
+    });
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).json({
+      success: false,
+      responseCode: ResponseCodes.server_error,
+    });
+  }
+};
+
+export const updatePassword = async (req, res, next) => {
+  try {
+    const { oldPassword, newPassword } = req.body;
+    const user = await User.findById(req.user.id);
+    if (oldPassword === newPassword)
+      return res.status(400).json({
+        success: false,
+        responseCode: ResponseCodes.same_password,
+      });
+    const isMatch = await bcrypt.compare(oldPassword, user.password);
+    if (!isMatch)
+      return res.status(400).json({
+        success: false,
+        responseCode: ResponseCodes.wrong_password,
+      });
+    const salt = await bcrypt.genSalt(10);
+    user.password = await bcrypt.hash(newPassword, salt);
+    await user.save();
+    return res.status(200).json({
+      success: true,
+      responseCode: ResponseCodes.password_updated,
+    });
+  } catch (error) {
+    console.error(error.message);
+    res.status(500).json({
+      success: false,
+      responseCode: ResponseCodes.server_error,
+    });
+  }
+};

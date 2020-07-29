@@ -11,6 +11,8 @@ export const ResponseCodes = {
   wrong_token: 'wrong_token',
   invalid_code: 'invalid_code',
   password_updated: 'password_updated',
+  same_password: 'same_password',
+
 
   /* /////////////////////USER///////////////////////////// */
   user_updated: 'user_updated',
