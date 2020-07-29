@@ -49,7 +49,7 @@ router.post(
 )
 
 router.post(
-  '/resetPassword',
+  '/reset-password',
   checkSchema(authValidation.resetPassword),
   returnIfNotValid,
   resolvePromises,
