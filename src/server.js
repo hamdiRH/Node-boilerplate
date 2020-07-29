@@ -7,6 +7,7 @@ import cors from 'cors'
 import helmet from 'helmet'
 
 import authRouter from './ressources/auth/auth.router'
+import userRouter from './ressources/user/user.router'
 const morgan = require('morgan')
 
 const app = express()
@@ -32,6 +33,7 @@ app.use(morgan('dev'))
 
 // Define Routes
 app.use('/api/auth', authRouter)
+app.use('/api/user', userRouter)
 
 app.use(function (req, res, next) {
   return res

@@ -77,5 +77,5 @@ router.post(
 //   updatePassword
 // );
 
-// export default router;
+
 export default router
