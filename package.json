@@ -3,15 +3,23 @@
   "version": "0.0.2",
   "description": "",
   "main": "index.js",
+  "files": [
+    "dist/index.js"
+  ],
   "scripts": {
-    "start": "node -r esm ./src",
     "heroku": "git add . && git commit -m new_features && git push heroku master",
-    "logs": "heroku logs --tail"
+    "logs": "heroku logs --tail",
+    "build": "babel src --out-dir dist --source-maps inline --copy-files",
+    "start": "npm run build && node dist",
+    "restart": "rimraf dist && npm run start",
+    "dev": "nodemon --exec npm run restart"
   },
   "keywords": [],
   "author": "HamdiRH",
   "license": "ISC",
   "dependencies": {
+    "@babel/plugin-proposal-class-properties": "^7.10.4",
+    "@babel/plugin-proposal-object-rest-spread": "^7.11.0",
     "bcryptjs": "^2.4.3",
     "config": "^3.3.1",
     "cors": "^2.8.5",
@@ -30,10 +38,15 @@
     "nodemailer": "^6.4.10",
     "path": "^0.12.7",
     "swagger-jsdoc": "^4.0.0",
-    "swagger-ui-express": "^4.1.4"
+    "swagger-ui-express": "^4.1.4",
+    "web-push": "^3.4.4"
   },
   "devDependencies": {
+    "@babel/cli": "^7.10.5",
+    "@babel/core": "^7.11.1",
+    "@babel/preset-env": "^7.11.0",
     "cross-env": "^7.0.2",
-    "nodemon": "^2.0.4"
+    "nodemon": "^2.0.4",
+    "rimraf": "^3.0.2"
   }
 }
