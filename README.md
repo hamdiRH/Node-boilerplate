@@ -1,4 +1,4 @@
-# boilerplate-node [![NPM version](https://badge.fury.io/js/boilerplate-node.svg)](https://npmjs.org/package/boilerplate-node) [![Build Status](https://travis-ci.org/Hamdi Rahal <hamdi.rahal@gmail.com>/boilerplate-node.svg?branch=master)](https://travis-ci.org/Hamdi Rahal <hamdi.rahal@gmail.com>/boilerplate-node)
+# boilerplate-node [![NPM version](https://badge.fury.io/js/boilerplate-node.svg)](https://npmjs.org/package/boilerplate-node) 
 
 > Boilerplate Node
 

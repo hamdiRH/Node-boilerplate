@@ -7,6 +7,7 @@
     "dist/index.js"
   ],
   "scripts": {
+    "git": "git add . && git commit -m new_features && git push origin master",
     "heroku": "git add . && git commit -m new_features && git push heroku master",
     "logs": "heroku logs --tail",
     "build": "babel src --out-dir dist --source-maps inline --copy-files",
